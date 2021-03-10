@@ -97,12 +97,15 @@ public class TableView extends RelativeLayout {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TableView);
 
             int resourceId = typedArray.getResourceId(R.styleable.TableView_itemRowWidth, 0);
-            int[] intArray = getResources().getIntArray(resourceId);
-            if (intArray != null) {
-                for (int i = 0; i < intArray.length; i++) {
-                    itemWidth.put(i, intArray[i]);
+            if (resourceId != 0){
+                int[] intArray = getResources().getIntArray(resourceId);
+                if (intArray != null) {
+                    for (int i = 0; i < intArray.length; i++) {
+                        itemWidth.put(i, intArray[i]);
+                    }
                 }
             }
+
             itemHeight = typedArray.getDimension(R.styleable.TableView_itemRowHeight, ItemParams.HEIGHT);
             headParams.setHeight((int) itemHeight);
             headParams.setItemWidth(itemWidth);
