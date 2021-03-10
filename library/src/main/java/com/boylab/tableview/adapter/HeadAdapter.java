@@ -48,7 +48,7 @@ public class HeadAdapter extends RecyclerView.Adapter<HeadAdapter.MyViewHolder> 
 
         ViewGroup.LayoutParams layoutParams = holder.text_item.getLayoutParams();
         layoutParams.height = headParams.getHeight();
-        layoutParams.width = headParams.getWidth(position);
+        layoutParams.width = headParams.getWidth(position + 1);
         holder.text_item.setLayoutParams(layoutParams);
 
         holder.text_item.setText(itemRow.get(position + 1));

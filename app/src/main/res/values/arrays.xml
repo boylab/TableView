@@ -2,9 +2,9 @@
 <resources>
 
     <integer-array name="tableWith">
+        <item>60</item>
         <item>100</item>
-        <item>100</item>
-        <item>100</item>
+        <item>60</item>
         <item>100</item>
         <item>100</item>
         <item>100</item>
