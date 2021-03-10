@@ -65,6 +65,7 @@ public class ItemParams {
         return WIDTH;
     }
 
+    @Deprecated
     public void setItemWidth(int column, int itemWidth) {
         this.itemWidth.put(column, itemWidth);
     }

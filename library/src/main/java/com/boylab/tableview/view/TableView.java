@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class TableView extends RelativeLayout {
 
@@ -372,11 +373,23 @@ public class TableView extends RelativeLayout {
         return (int) itemHeight;
     }
 
-    public void setItemHeight(int itemHeight) {
+    public void setItemHeight(int itemHeight, HashMap<Integer, Integer> itemWidth) {
         this.itemHeight = itemHeight;
+
+        Set<Integer> keySet = itemWidth.keySet();
+        for(int key : keySet){
+            this.itemWidth.put(key, itemWidth.get(key));
+        }
+
         headParams.setHeight((int) this.itemHeight);
         leftParams.setHeight((int) this.itemHeight);
         contentParams.setHeight((int) this.itemHeight);
+
+        headParams.setItemWidth(itemWidth);
+        leftParams.setItemWidth(itemWidth);
+        contentParams.setItemWidth(itemWidth);
+
+        setTextHeading();
     }
 
     public int itemWidth(int column) {
@@ -384,14 +397,6 @@ public class TableView extends RelativeLayout {
             return itemWidth.get(column);
         }
         return ItemParams.HEIGHT;
-    }
-
-    public TableView setItemWidth(int column, int itemWidth) {
-        this.itemWidth.put(column, itemWidth);
-        headParams.setItemWidth(column, itemWidth);
-        leftParams.setItemWidth(column, itemWidth);
-        contentParams.setItemWidth(column, itemWidth);
-        return this;
     }
 
     public int getFoucsColor() {
