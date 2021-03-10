@@ -44,7 +44,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements TableView.OnTableRefreshListener, TableView.OnTableLoadMoreListener, TableView.OnItemClickListenter, TableView.OnItemLongClickListenter {
 
-    private ArrayList<ItemRow> mTableDatas = new ArrayList<ItemRow>();
+    private ArrayList<Student> mTableDatas = new ArrayList<Student>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

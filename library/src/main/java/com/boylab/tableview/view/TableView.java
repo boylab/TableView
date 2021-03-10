@@ -60,7 +60,7 @@ public class TableView extends RelativeLayout {
      * 数据结构
      */
     private ItemRow headRow;
-    private ArrayList<ItemRow> mTableDatas = new ArrayList<ItemRow>();
+    private ArrayList<? extends ItemRow> mTableDatas = new ArrayList<ItemRow>();
 
     /**
      * 参数
@@ -255,7 +255,7 @@ public class TableView extends RelativeLayout {
      *
      * @param mTableDatas
      */
-    public void setTableDatas(ArrayList<ItemRow> mTableDatas) {
+    public void setTableDatas(ArrayList<? extends ItemRow> mTableDatas) {
         this.mTableDatas = mTableDatas;
         tableViewAdapter = new TableViewAdapter(getContext(), this.mTableDatas, leftParams, contentParams);
         tableViewAdapter.setOnTableViewCreatedListener(new TableViewAdapter.OnTableViewCreatedListener() {

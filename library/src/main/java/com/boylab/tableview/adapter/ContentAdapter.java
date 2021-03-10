@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHolder> {
 
     private Context context;
-    private ArrayList<ItemRow> mTableDatas = new ArrayList<ItemRow>();
+    private ArrayList<? extends ItemRow> mTableDatas = new ArrayList<ItemRow>();
     private ItemParams contentParams;
 
     private int focusRow = -1;
@@ -27,7 +27,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHo
     private TableView.OnItemClickListenter mOnItemClickListenter;
     private TableView.OnItemLongClickListenter mOnItemLongClickListenter;
 
-    public ContentAdapter(Context context, ArrayList<ItemRow> mTableDatas, ItemParams contentParams) {
+    public ContentAdapter(Context context, ArrayList<? extends ItemRow> mTableDatas, ItemParams contentParams) {
         this.context = context;
         this.mTableDatas = mTableDatas;
         this.contentParams = contentParams;

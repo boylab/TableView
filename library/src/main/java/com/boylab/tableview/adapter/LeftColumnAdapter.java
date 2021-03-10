@@ -19,10 +19,10 @@ import java.util.ArrayList;
 public class LeftColumnAdapter extends RecyclerView.Adapter<LeftColumnAdapter.MyViewHolder> {
 
     private Context context;
-    private ArrayList<ItemRow> mTableDatas = new ArrayList<ItemRow>();
+    private ArrayList<? extends ItemRow> mTableDatas = new ArrayList<ItemRow>();
     private ItemParams leftParams;
 
-    public LeftColumnAdapter(Context context, ArrayList<ItemRow> mTableDatas, ItemParams leftParams) {
+    public LeftColumnAdapter(Context context, ArrayList<? extends ItemRow> mTableDatas, ItemParams leftParams) {
         this.context = context;
         this.mTableDatas = mTableDatas;
         this.leftParams = leftParams;

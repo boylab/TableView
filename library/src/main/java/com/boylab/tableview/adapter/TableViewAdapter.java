@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.MyViewHolder> {
 
     private Context context;
-    private ArrayList<ItemRow> mTableDatas = new ArrayList<ItemRow>();
+    private ArrayList<? extends ItemRow> mTableDatas = new ArrayList<ItemRow>();
     private ItemParams leftParams, contentParams;
 
     private int focusRow = -1;
@@ -41,7 +41,7 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.MyVi
      */
     private TableView.OnItemLongClickListenter mOnItemLongClickListenter;
 
-    public TableViewAdapter(Context context, ArrayList<ItemRow> mTableDatas, ItemParams leftParams, ItemParams contentParams) {
+    public TableViewAdapter(Context context, ArrayList<? extends ItemRow> mTableDatas, ItemParams leftParams, ItemParams contentParams) {
         this.context = context;
         this.mTableDatas = mTableDatas;
         this.leftParams = leftParams;
