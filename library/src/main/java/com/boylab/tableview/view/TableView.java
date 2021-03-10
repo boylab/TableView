@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -38,7 +37,6 @@ public class TableView extends RelativeLayout {
     /**
      * 视图结构
      */
-    private LinearLayout linear_Heading;
     private TextView text_Heading;
     private CustomScrollView rv_HeadRow;
     private SmartRefreshLayout refreshLayout;
@@ -66,7 +64,7 @@ public class TableView extends RelativeLayout {
      * 参数
      */
     private HashMap<Integer, Integer> itemWidth = new HashMap<>();
-    private float itemHeight = ItemParams.HEIGHT;
+    private int itemHeight = ItemParams.HEIGHT;
     private int divider = getResources().getColor(android.R.color.holo_red_dark);
     private ItemParams headParams, leftParams, contentParams;
 
@@ -96,19 +94,19 @@ public class TableView extends RelativeLayout {
             contentParams = new ItemParams();
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TableView);
 
-            int resourceId = typedArray.getResourceId(R.styleable.TableView_itemWidth, 0);
-            int[] intArray = getResources().getIntArray(resourceId);
-            if (intArray != null) {
-                for (int i = 0; i < intArray.length; i++) {
-                    itemWidth.put(i, intArray[i]);
+            CharSequence[] charWith = typedArray.getTextArray(R.styleable.TableView_itemWidth);
+            if (charWith != null) {
+                List<CharSequence> withList = Arrays.asList(charWith);
+                for (int i = 0; i < withList.size(); i++) {
+                    itemWidth.put(i, Integer.getInteger(String.valueOf(withList.get(i))));
                 }
             }
-            itemHeight = typedArray.getDimension(R.styleable.TableView_itemHeight, ItemParams.HEIGHT);
-            headParams.setHeight((int) itemHeight);
+            itemHeight = typedArray.getInt(R.styleable.TableView_itemHeight, ItemParams.HEIGHT);
+            headParams.setHeight(itemHeight);
             headParams.setItemWidth(itemWidth);
-            leftParams.setHeight((int) itemHeight);
+            leftParams.setHeight(itemHeight);
             leftParams.setItemWidth(itemWidth);
-            contentParams.setHeight((int) itemHeight);
+            contentParams.setHeight(itemHeight);
             contentParams.setItemWidth(itemWidth);
 
             divider = typedArray.getColor(R.styleable.TableView_dividerColor, getResources().getColor(android.R.color.darker_gray));
@@ -117,58 +115,58 @@ public class TableView extends RelativeLayout {
             leftParams.setFoucsColor(foucsColor);
             contentParams.setFoucsColor(foucsColor);
 
-            float headTextSize = typedArray.getDimension(R.styleable.TableView_headTextSize, ItemParams.TEXT_SIZE);
+            int headTextSize = typedArray.getInt(R.styleable.TableView_headTextSize, ItemParams.TEXT_SIZE);
             int headTextColor = typedArray.getColor(R.styleable.TableView_headTextColor, getResources().getColor(android.R.color.black));
             int headBackgroundColor = typedArray.getColor(R.styleable.TableView_headBackgroundColor, getResources().getColor(android.R.color.holo_blue_light));
-            float headPaddingTop = typedArray.getDimension(R.styleable.TableView_headPaddingTop, ItemParams.PADDING);
-            float headPaddingLeft = typedArray.getDimension(R.styleable.TableView_headPaddingLeft, ItemParams.PADDING);
-            float headPaddingBottom = typedArray.getDimension(R.styleable.TableView_headPaddingBottom, ItemParams.PADDING);
-            float headPaddingRight = typedArray.getDimension(R.styleable.TableView_headPaddingRight, ItemParams.PADDING);
+            int headPaddingTop = typedArray.getInt(R.styleable.TableView_headPaddingTop, ItemParams.PADDING);
+            int headPaddingLeft = typedArray.getInt(R.styleable.TableView_headPaddingLeft, ItemParams.PADDING);
+            int headPaddingBottom = typedArray.getInt(R.styleable.TableView_headPaddingBottom, ItemParams.PADDING);
+            int headPaddingRight = typedArray.getInt(R.styleable.TableView_headPaddingRight, ItemParams.PADDING);
             ItemGravity headGravity = ItemGravity.fromId(typedArray.getInt(R.styleable.TableView_headGravity, ItemGravity.CENTER.ordinal()));
 
             headParams.setTextSize(headTextSize);
             headParams.setTextColor(headTextColor);
             headParams.setBackgroundColor(headBackgroundColor);
-            headParams.setPaddingTop((int) headPaddingTop);
-            headParams.setPaddingLeft((int) headPaddingLeft);
-            headParams.setPaddingBottom((int) headPaddingBottom);
-            headParams.setPaddingRight((int) headPaddingRight);
+            headParams.setPaddingTop(headPaddingTop);
+            headParams.setPaddingLeft(headPaddingLeft);
+            headParams.setPaddingBottom(headPaddingBottom);
+            headParams.setPaddingRight(headPaddingRight);
             headParams.setItemGravity(headGravity);
 
-            float leftTextSize = typedArray.getDimension(R.styleable.TableView_leftTextSize, ItemParams.TEXT_SIZE);
+            int leftTextSize = typedArray.getInt(R.styleable.TableView_leftTextSize, ItemParams.TEXT_SIZE);
             int leftTextColor = typedArray.getColor(R.styleable.TableView_leftTextColor, getResources().getColor(android.R.color.black));
             int leftBackgroundColor = typedArray.getColor(R.styleable.TableView_leftBackgroundColor, getResources().getColor(android.R.color.holo_blue_bright));
-            float leftPaddingTop = typedArray.getDimension(R.styleable.TableView_leftPaddingTop, ItemParams.PADDING);
-            float leftPaddingLeft = typedArray.getDimension(R.styleable.TableView_leftPaddingLeft, ItemParams.PADDING);
-            float leftPaddingBottom = typedArray.getDimension(R.styleable.TableView_leftPaddingBottom, ItemParams.PADDING);
-            float leftPaddingRight = typedArray.getDimension(R.styleable.TableView_leftPaddingRight, ItemParams.PADDING);
+            int leftPaddingTop = typedArray.getInt(R.styleable.TableView_leftPaddingTop, ItemParams.PADDING);
+            int leftPaddingLeft = typedArray.getInt(R.styleable.TableView_leftPaddingLeft, ItemParams.PADDING);
+            int leftPaddingBottom = typedArray.getInt(R.styleable.TableView_leftPaddingBottom, ItemParams.PADDING);
+            int leftPaddingRight = typedArray.getInt(R.styleable.TableView_leftPaddingRight, ItemParams.PADDING);
             ItemGravity leftGravity = ItemGravity.fromId(typedArray.getInt(R.styleable.TableView_leftGravity, ItemGravity.CENTER.ordinal()));
 
             leftParams.setTextSize(leftTextSize);
             leftParams.setTextColor(leftTextColor);
             leftParams.setBackgroundColor(leftBackgroundColor);
-            leftParams.setPaddingTop((int) leftPaddingTop);
-            leftParams.setPaddingLeft((int) leftPaddingLeft);
-            leftParams.setPaddingBottom((int) leftPaddingBottom);
-            leftParams.setPaddingRight((int) leftPaddingRight);
+            leftParams.setPaddingTop(leftPaddingTop);
+            leftParams.setPaddingLeft(leftPaddingLeft);
+            leftParams.setPaddingBottom(leftPaddingBottom);
+            leftParams.setPaddingRight(leftPaddingRight);
             leftParams.setItemGravity(leftGravity);
 
-            float contentTextSize = typedArray.getDimension(R.styleable.TableView_contentTextSize, ItemParams.TEXT_SIZE);
+            int contentTextSize = typedArray.getInt(R.styleable.TableView_contentTextSize, ItemParams.TEXT_SIZE);
             int contentTextColor = typedArray.getColor(R.styleable.TableView_contentTextColor, getResources().getColor(android.R.color.black));
             int contentBackgroundColor = typedArray.getColor(R.styleable.TableView_contentBackgroundColor, getResources().getColor(android.R.color.white));
-            float contentPaddingTop = typedArray.getDimension(R.styleable.TableView_contentPaddingTop, ItemParams.PADDING);
-            float contentPaddingLeft = typedArray.getDimension(R.styleable.TableView_contentPaddingLeft, ItemParams.PADDING);
-            float contentPaddingBottom = typedArray.getDimension(R.styleable.TableView_contentPaddingBottom, ItemParams.PADDING);
-            float contentPaddingRight = typedArray.getDimension(R.styleable.TableView_contentPaddingRight, ItemParams.PADDING);
+            int contentPaddingTop = typedArray.getInt(R.styleable.TableView_contentPaddingTop, ItemParams.PADDING);
+            int contentPaddingLeft = typedArray.getInt(R.styleable.TableView_contentPaddingLeft, ItemParams.PADDING);
+            int contentPaddingBottom = typedArray.getInt(R.styleable.TableView_contentPaddingBottom, ItemParams.PADDING);
+            int contentPaddingRight = typedArray.getInt(R.styleable.TableView_contentPaddingRight, ItemParams.PADDING);
             ItemGravity contentGravity = ItemGravity.fromId(typedArray.getInt(R.styleable.TableView_contentGravity, ItemGravity.CENTER.ordinal()));
 
             contentParams.setTextSize(contentTextSize);
             contentParams.setTextColor(contentTextColor);
             contentParams.setBackgroundColor(contentBackgroundColor);
-            contentParams.setPaddingTop((int) contentPaddingTop);
-            contentParams.setPaddingLeft((int) contentPaddingLeft);
-            contentParams.setPaddingBottom((int) contentPaddingBottom);
-            contentParams.setPaddingRight((int) contentPaddingRight);
+            contentParams.setPaddingTop(contentPaddingTop);
+            contentParams.setPaddingLeft(contentPaddingLeft);
+            contentParams.setPaddingBottom(contentPaddingBottom);
+            contentParams.setPaddingRight(contentPaddingRight);
             contentParams.setItemGravity(contentGravity);
 
             typedArray.recycle();
@@ -178,18 +176,14 @@ public class TableView extends RelativeLayout {
     private void initView(Context context) {
         View inflate = View.inflate(context, R.layout.layout_tableview, this);
 
-        linear_Heading = inflate.findViewById(R.id.linear_Heading);
         text_Heading = inflate.findViewById(R.id.text_Heading);
         rv_HeadRow = inflate.findViewById(R.id.rv_HeadRow);
         refreshLayout = inflate.findViewById(R.id.refreshLayout);
         rv_TableView = inflate.findViewById(R.id.rv_TableView);
 
-        linear_Heading.setBackgroundColor(divider);
-        rv_HeadRow.setBackgroundColor(divider);
-        rv_TableView.setBackgroundColor(divider);
-
         setTextHeading();
         rv_HeadRow.setLayoutManager(LinearLayoutManager.HORIZONTAL);
+        rv_HeadRow.setBackgroundColor(divider);
 
         refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
         refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
@@ -199,7 +193,7 @@ public class TableView extends RelativeLayout {
         LinearLayoutManager headLayoutManager = new LinearLayoutManager(context);
         headLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rv_TableView.setLayoutManager(headLayoutManager);
-
+        rv_TableView.setBackgroundColor(divider);
     }
 
     private void setTextHeading() {
@@ -233,6 +227,7 @@ public class TableView extends RelativeLayout {
             @Override
             public void onScrollChanged(HorizontalScrollView scrollView, int x, int y) {
                 for (HorizontalScrollView mScrollView : mScrollViews) {
+                    Log.i(">>>>>>head", "onScrollChanged: x = "+x + "  >>>> y = "+y);
                     mScrollView.scrollTo(x, y);
                 }
             }
@@ -287,7 +282,7 @@ public class TableView extends RelativeLayout {
         tableViewAdapter.setOnTableViewListener(new TableViewAdapter.OnTableViewListener() {
             @Override
             public void onTableScrollChange(int x, int y) {
-                //Log.i(">>>>>>table", "onScrollChanged: x = "+x + "  >>>> y = "+y);
+                Log.i(">>>>>>table", "onScrollChanged: x = "+x + "  >>>> y = "+y);
                 rv_HeadRow.scrollTo(x, y);
             }
         });
@@ -351,20 +346,17 @@ public class TableView extends RelativeLayout {
 
     public void setDivider(int divider) {
         this.divider = divider;
-        linear_Heading.setBackgroundColor(divider);
-        rv_HeadRow.setBackgroundColor(divider);
-        rv_TableView.setBackgroundColor(divider);
     }
 
     public int getItemHeight() {
-        return (int) itemHeight;
+        return itemHeight;
     }
 
     public void setItemHeight(int itemHeight) {
         this.itemHeight = itemHeight;
-        headParams.setHeight((int) this.itemHeight);
-        leftParams.setHeight((int) this.itemHeight);
-        contentParams.setHeight((int) this.itemHeight);
+        headParams.setHeight(itemHeight);
+        leftParams.setHeight(itemHeight);
+        contentParams.setHeight(itemHeight);
     }
 
     public int itemWidth(int column) {
@@ -392,7 +384,7 @@ public class TableView extends RelativeLayout {
         contentParams.setFoucsColor(foucsColor);
     }
 
-    public float getHeadTextSize() {
+    public int getHeadTextSize() {
         return headParams.getTextSize();
     }
 
@@ -447,7 +439,7 @@ public class TableView extends RelativeLayout {
         headParams.setItemGravity(headGravity);
     }
 
-    public float getLeftTextSize() {
+    public int getLeftTextSize() {
         return leftParams.getTextSize();
     }
 
@@ -502,7 +494,7 @@ public class TableView extends RelativeLayout {
         leftParams.setItemGravity(leftGravity);
     }
 
-    public float getContentTextSize() {
+    public int getContentTextSize() {
         return contentParams.getTextSize();
     }
 
