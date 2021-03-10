@@ -20,7 +20,7 @@
     </attr>
 
     <declare-styleable name="TableView">
-        <attr name="itemWidth" format="reference"/>
+        <attr name="itemWidth" format="reference|integer"/>
         <attr name="itemHeight" format="dimension"/>
         <attr name="dividerColor" format="reference|color"/>
         <attr name="foucsColor" format="reference|color"/>
