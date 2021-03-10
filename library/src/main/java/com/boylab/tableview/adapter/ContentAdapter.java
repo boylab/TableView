@@ -49,11 +49,11 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHo
         ItemRow itemRow = mTableDatas.get(position);
 
         boolean isFocus = (focusRow == position);
-        final HeaderAdapter headerAdapter = new HeaderAdapter(context, itemRow, contentParams, isFocus);
-        headerAdapter.setCanFocus(true);
-        holder.rv_Table_Row.setAdapter(headerAdapter);
+        final HeadAdapter headAdapter = new HeadAdapter(context, itemRow, contentParams, isFocus);
+        headAdapter.setCanFocus(true);
+        holder.rv_Table_Row.setAdapter(headAdapter);
 
-        headerAdapter.setOnClickListener(new View.OnClickListener() {
+        headAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mOnItemClickListenter != null){
@@ -62,7 +62,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHo
             }
         });
 
-        headerAdapter.setOnLongClickListener(new View.OnLongClickListener() {
+        headAdapter.setOnLongClickListener(new View.OnLongClickListener() {
 
             @Override
             public boolean onLongClick(View v) {

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boylab.tableview.R;
-import com.boylab.tableview.adapter.HeaderAdapter;
+import com.boylab.tableview.adapter.HeadAdapter;
 import com.boylab.tableview.adapter.TableViewAdapter;
 import com.boylab.tableview.protocol.ItemGravity;
 import com.boylab.tableview.protocol.ItemParams;
@@ -63,10 +63,10 @@ public class TableView extends RelativeLayout {
     /**
      * 参数
      */
-    private ItemParams headParams, leftParams, contentParams;
-    private int divider = getResources().getColor(android.R.color.holo_red_dark);
     private HashMap<Integer, Integer> itemWidth = new HashMap<>();
     private int itemHeight = ItemParams.HEIGHT;
+    private int divider = getResources().getColor(android.R.color.holo_red_dark);
+    private ItemParams headParams, leftParams, contentParams;
 
     public TableView(Context context) {
         this(context, null, 0);
@@ -175,7 +175,6 @@ public class TableView extends RelativeLayout {
 
     private void initView(Context context) {
         View inflate = View.inflate(context, R.layout.layout_tableview, this);
-        setBackgroundColor(divider);
 
         text_Heading = inflate.findViewById(R.id.text_Heading);
         rv_HeadRow = inflate.findViewById(R.id.rv_HeadRow);
@@ -184,6 +183,7 @@ public class TableView extends RelativeLayout {
 
         setTextHeading();
         rv_HeadRow.setLayoutManager(LinearLayoutManager.HORIZONTAL);
+        rv_HeadRow.setBackgroundColor(divider);
 
         refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
         refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
@@ -193,6 +193,7 @@ public class TableView extends RelativeLayout {
         LinearLayoutManager headLayoutManager = new LinearLayoutManager(context);
         headLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rv_TableView.setLayoutManager(headLayoutManager);
+        rv_TableView.setBackgroundColor(divider);
     }
 
     private void setTextHeading() {
@@ -219,13 +220,14 @@ public class TableView extends RelativeLayout {
         this.headRow = headRow;
 
         text_Heading.setText(headRow.get(0));
-        HeaderAdapter headerAdapter = new HeaderAdapter(getContext(), headRow, headParams, false);
-        rv_HeadRow.setAdapter(headerAdapter);
+        HeadAdapter headAdapter = new HeadAdapter(getContext(), headRow, headParams, false);
+        rv_HeadRow.setAdapter(headAdapter);
 
         rv_HeadRow.setOnScrollChangeListener(new CustomScrollView.onScrollChangeListener() {
             @Override
             public void onScrollChanged(HorizontalScrollView scrollView, int x, int y) {
                 for (HorizontalScrollView mScrollView : mScrollViews) {
+                    Log.i(">>>>>>head", "onScrollChanged: x = "+x + "  >>>> y = "+y);
                     mScrollView.scrollTo(x, y);
                 }
             }
@@ -280,6 +282,7 @@ public class TableView extends RelativeLayout {
         tableViewAdapter.setOnTableViewListener(new TableViewAdapter.OnTableViewListener() {
             @Override
             public void onTableScrollChange(int x, int y) {
+                Log.i(">>>>>>table", "onScrollChanged: x = "+x + "  >>>> y = "+y);
                 rv_HeadRow.scrollTo(x, y);
             }
         });
@@ -335,6 +338,217 @@ public class TableView extends RelativeLayout {
             }
         });
         //调用 finishRefresh(boolean success);
+    }
+
+    public int getDivider() {
+        return divider;
+    }
+
+    public void setDivider(int divider) {
+        this.divider = divider;
+    }
+
+    public int getItemHeight() {
+        return itemHeight;
+    }
+
+    public void setItemHeight(int itemHeight) {
+        this.itemHeight = itemHeight;
+        headParams.setHeight(itemHeight);
+        leftParams.setHeight(itemHeight);
+        contentParams.setHeight(itemHeight);
+    }
+
+    public int itemWidth(int column) {
+        if (itemWidth.containsKey(column)){
+            return itemWidth.get(column);
+        }
+        return ItemParams.HEIGHT;
+    }
+
+    public TableView setItemWidth(int column, int itemWidth) {
+        this.itemWidth.put(column, itemWidth);
+        headParams.setItemWidth(column, itemWidth);
+        leftParams.setItemWidth(column, itemWidth);
+        contentParams.setItemWidth(column, itemWidth);
+        return this;
+    }
+
+    public int getFoucsColor() {
+        return contentParams.getFoucsColor();
+    }
+
+    public void setFoucsColor(int foucsColor) {
+        headParams.setFoucsColor(foucsColor);
+        leftParams.setFoucsColor(foucsColor);
+        contentParams.setFoucsColor(foucsColor);
+    }
+
+    public int getHeadTextSize() {
+        return headParams.getTextSize();
+    }
+
+    public void setHeadTextSize(int headTextSize) {
+        headParams.setTextSize(headTextSize);
+    }
+
+    public int getHeadTextColor() {
+        return headParams.getTextColor();
+    }
+
+    public void setHeadTextColor(int headTextColor) {
+        headParams.setTextColor(headTextColor);
+    }
+
+    public int getHeadBackgroundColor() {
+        return headParams.getBackgroundColor();
+    }
+
+    public void setHeadBackgroundColor(int headBackgroundColor) {
+        headParams.setBackgroundColor(headBackgroundColor);
+    }
+
+    public int getHeadPaddingTop() {
+        return headParams.getPaddingTop();
+    }
+
+    public int getHeadPaddingLeft() {
+        return headParams.getPaddingLeft();
+    }
+
+    public int getHeadPaddingBottom() {
+        return headParams.getPaddingBottom();
+    }
+
+    public int getHeadPaddingRight() {
+        return headParams.getPaddingRight();
+    }
+
+    public void setHeadPadding(int top, int left, int bottom, int right) {
+        headParams.setPaddingTop(top);
+        headParams.setPaddingLeft(left);
+        headParams.setPaddingBottom(bottom);
+        headParams.setPaddingRight(right);
+    }
+
+    public ItemGravity getHeadGravity() {
+        return headParams.getItemGravity();
+    }
+
+    public void setHeadGravity(ItemGravity headGravity) {
+        headParams.setItemGravity(headGravity);
+    }
+
+    public int getLeftTextSize() {
+        return leftParams.getTextSize();
+    }
+
+    public void setLeftTextSize(int leftTextSize) {
+        leftParams.setTextSize(leftTextSize);
+    }
+
+    public int getLeftTextColor() {
+        return leftParams.getTextColor();
+    }
+
+    public void setLeftTextColor(int leftTextColor) {
+        leftParams.setTextColor(leftTextColor);
+    }
+
+    public int getLeftBackgroundColor() {
+        return leftParams.getBackgroundColor();
+    }
+
+    public void setLeftBackgroundColor(int leftBackgroundColor) {
+        leftParams.setBackgroundColor(leftBackgroundColor);
+    }
+
+    public int getLeftPaddingTop() {
+        return leftParams.getPaddingTop();
+    }
+
+    public int getLeftPaddingLeft() {
+        return leftParams.getPaddingLeft();
+    }
+
+    public int getLeftPaddingBottom() {
+        return leftParams.getPaddingBottom();
+    }
+
+    public int getLeftPaddingRight() {
+        return leftParams.getPaddingRight();
+    }
+
+    public void setLeftPadding(int top, int left, int bottom, int right) {
+        leftParams.setPaddingTop(top);
+        leftParams.setPaddingLeft(left);
+        leftParams.setPaddingBottom(bottom);
+        leftParams.setPaddingRight(right);
+    }
+
+    public ItemGravity getLeftGravity() {
+        return leftParams.getItemGravity();
+    }
+
+    public void setLeftGravity(ItemGravity leftGravity) {
+        leftParams.setItemGravity(leftGravity);
+    }
+
+    public int getContentTextSize() {
+        return contentParams.getTextSize();
+    }
+
+    public void setContentTextSize(int contentTextSize) {
+        contentParams.setTextSize(contentTextSize);
+
+    }
+
+    public int getContentTextColor() {
+        return contentParams.getTextColor();
+    }
+
+    public void setContentTextColor(int contentTextColor) {
+        contentParams.setTextColor(contentTextColor);
+
+    }
+
+    public int getContentBackgroundColor() {
+        return contentParams.getBackgroundColor();
+    }
+
+    public void setContentBackgroundColor(int contentBackgroundColor) {
+        contentParams.setBackgroundColor(contentBackgroundColor);
+    }
+
+    public int getContentPaddingTop() {
+        return contentParams.getPaddingTop();
+    }
+
+    public int getContentPaddingLeft() {
+        return contentParams.getPaddingLeft();
+    }
+
+    public int getContentPaddingBottom() {
+        return contentParams.getPaddingBottom();
+    }
+
+    public int getContentPaddingRight() {
+        return contentParams.getPaddingRight();
+    }
+
+    public void setContentPadding(int top, int left, int bottom, int right) {
+        contentParams.setPaddingTop(top);
+        contentParams.setPaddingLeft(left);
+        contentParams.setPaddingBottom(bottom);
+        contentParams.setPaddingRight(right);
+    }
+
+    public ItemGravity getContentGravity() {
+        return contentParams.getItemGravity();
+    }
+
+    public void setContentGravity(ItemGravity contentGravity) {
+        contentParams.setItemGravity(contentGravity);
     }
 
     /**

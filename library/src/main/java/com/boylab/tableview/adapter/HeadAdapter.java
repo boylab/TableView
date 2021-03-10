@@ -13,7 +13,7 @@ import com.boylab.tableview.R;
 import com.boylab.tableview.protocol.ItemParams;
 import com.boylab.tableview.protocol.ItemRow;
 
-public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.MyViewHolder> {
+public class HeadAdapter extends RecyclerView.Adapter<HeadAdapter.MyViewHolder> {
 
     private Context context;
     private ItemRow itemRow;
@@ -25,7 +25,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.MyViewHold
     private View.OnClickListener onClickListener;
     private View.OnLongClickListener onLongClickListener;
 
-    public HeaderAdapter(Context context, ItemRow itemRow, ItemParams headParams, boolean isFocus) {
+    public HeadAdapter(Context context, ItemRow itemRow, ItemParams headParams, boolean isFocus) {
         this.context = context;
         this.itemRow = itemRow;
         this.headParams = headParams;

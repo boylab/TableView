@@ -18,6 +18,7 @@
         android:id="@+id/rv_HeadRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fillViewport="true"
         android:layout_toRightOf="@+id/text_Heading"
         android:layout_alignTop="@+id/text_Heading" />
 
@@ -33,7 +34,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_TableView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <com.scwang.smart.refresh.footer.ClassicsFooter

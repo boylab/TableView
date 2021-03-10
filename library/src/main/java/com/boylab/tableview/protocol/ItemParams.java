@@ -2,6 +2,8 @@ package com.boylab.tableview.protocol;
 
 import android.graphics.Color;
 
+import com.boylab.tableview.view.TableView;
+
 import java.util.HashMap;
 import java.util.Set;
 
@@ -61,6 +63,10 @@ public class ItemParams {
             return itemWidth.get(column);
         }
         return WIDTH;
+    }
+
+    public void setItemWidth(int column, int itemWidth) {
+        this.itemWidth.put(column, itemWidth);
     }
 
     public void setItemWidth(HashMap<Integer, Integer> itemWidth) {

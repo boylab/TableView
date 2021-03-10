@@ -25,7 +25,7 @@ public class StudentLabel implements ItemRow {
 
     @Override
     public int size() {
-        return 24;
+        return 12;
     }
 
     @Override
