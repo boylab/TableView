@@ -151,7 +151,7 @@ public class Student implements ItemRow {
 
     @Override
     public int size() {
-        return 13;
+        return 24;
     }
 
     @Override
@@ -159,6 +159,8 @@ public class Student implements ItemRow {
         /**
          * position 对应的值 与 Label的标签对应上即可
          */
+        position = position % 12;
+
         if (position == 0) {
             return String.valueOf(id);
         } else if (position == 1) {

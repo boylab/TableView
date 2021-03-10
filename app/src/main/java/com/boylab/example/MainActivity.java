@@ -3,6 +3,8 @@ package com.boylab.example;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.boylab.example.bean.StudentLabel;
 import com.boylab.example.bean.Student;
@@ -40,7 +42,7 @@ import java.util.ArrayList;
  *
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TableView.OnTableRefreshListener, TableView.OnTableLoadMoreListener, TableView.OnItemClickListenter, TableView.OnItemLongClickListenter {
 
     private ArrayList<ItemRow> mTableDatas = new ArrayList<ItemRow>();
 
@@ -56,46 +58,53 @@ public class MainActivity extends AppCompatActivity {
             mTableDatas.add(new Student(i));
         }
 
-
         final TableView tableview = findViewById(R.id.tableview);
-        tableview.setHeaderRow(new StudentLabel());
+        tableview.setHeadRow(new StudentLabel());
         tableview.setTableDatas(mTableDatas);
 
-        tableview.setOnRefreshListener(new TableView.OnTableRefreshListener(){
+        tableview.setOnRefreshListener(this);
+        tableview.setOnLoadMoreListener(this);
 
-            @Override
-            public void onRefresh(TableView mTableView) {
+        tableview.setOnItemClickListenter(this);
+        tableview.setOnItemLongClickListenter(this);
+    }
 
-                //数据更新
-                mTableDatas.clear();
-                for (int i = 0; i < 20; i++) {
-                    mTableDatas.add(new Student(i));
-                }
+    @Override
+    public void onRefresh(TableView mTableView) {
+        //数据更新
+        mTableDatas.clear();
+        for (int i = 0; i < 30; i++) {
+            mTableDatas.add(new Student(i));
+        }
 
-                //视图更新
-                tableview.notifyDataSetChanged();
+        //视图更新
+        mTableView.notifyDataSetChanged();
 
-                //结束刷新
-                mTableView.finishRefresh();
-            }
-        });
+        //结束刷新
+        mTableView.finishRefresh();
+    }
 
-        tableview.setOnLoadMoreListener(new TableView.OnTableLoadMoreListener(){
+    @Override
+    public void onLoadMore(TableView mTableView) {
 
-            @Override
-            public void onLoadMore(TableView mTableView) {
+        //数据添加
+        for (int i = 10; i < 20; i++) {
+            mTableDatas.add(new Student(i));
+        }
 
-                //数据添加
-                for (int i = 20; i < 20; i++) {
-                    mTableDatas.add(new Student(i));
-                }
+        //视图更新
+        mTableView.notifyDataSetChanged();
 
-                //视图更新
-                tableview.notifyDataSetChanged();
+        mTableView.finishLoadMore();
+    }
 
-                mTableView.finishLoadMore();
-            }
-        });
+    @Override
+    public void onItemClick(View item, int position) {
+        Log.i(">>>>>>", "onItemClick: position = "+position);
+    }
 
+    @Override
+    public void onItemLongClick(View item, int position) {
+        Log.i(">>>>>>", "onItemClick: position = "+position);
     }
 }

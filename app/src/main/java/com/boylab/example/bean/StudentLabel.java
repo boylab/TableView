@@ -25,11 +25,12 @@ public class StudentLabel implements ItemRow {
 
     @Override
     public int size() {
-        return 13;
+        return 24;
     }
 
     @Override
     public String get(int position) {
+        position = position % 12;
         if (position < size()){
             return label.get(position);
         }

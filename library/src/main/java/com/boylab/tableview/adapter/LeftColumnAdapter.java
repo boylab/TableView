@@ -1,6 +1,7 @@
 package com.boylab.tableview.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boylab.tableview.R;
+import com.boylab.tableview.protocol.ItemParams;
 import com.boylab.tableview.protocol.ItemRow;
 
 import java.util.ArrayList;
@@ -18,10 +20,12 @@ public class LeftColumnAdapter extends RecyclerView.Adapter<LeftColumnAdapter.My
 
     private Context context;
     private ArrayList<ItemRow> mTableDatas = new ArrayList<ItemRow>();
+    private ItemParams leftParams;
 
-    public LeftColumnAdapter(Context context, ArrayList<ItemRow> mTableDatas) {
+    public LeftColumnAdapter(Context context, ArrayList<ItemRow> mTableDatas, ItemParams leftParams) {
         this.context = context;
         this.mTableDatas = mTableDatas;
+        this.leftParams = leftParams;
     }
 
     @NonNull
@@ -48,6 +52,18 @@ public class LeftColumnAdapter extends RecyclerView.Adapter<LeftColumnAdapter.My
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             text_item = itemView.findViewById(R.id.text_item);
+
+            ViewGroup.LayoutParams layoutParams = text_item.getLayoutParams();
+            layoutParams.height = leftParams.getHeight();
+            layoutParams.width = leftParams.getWidth(getAdapterPosition());
+            text_item.setLayoutParams(layoutParams);
+
+            text_item.setTextSize(leftParams.getTextSize());
+            text_item.setTextColor(leftParams.getTextColor());
+            text_item.setBackgroundColor(leftParams.getBackgroundColor());
+            text_item.setPadding(leftParams.getPaddingLeft(), leftParams.getPaddingLeft(), leftParams.getPaddingLeft(), leftParams.getPaddingLeft());
+
+            text_item.setGravity(leftParams.getItemGravity().getGravity());
         }
     }
 }

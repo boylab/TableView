@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boylab.tableview.R;
+import com.boylab.tableview.protocol.ItemParams;
 import com.boylab.tableview.protocol.ItemRow;
 import com.boylab.tableview.view.CustomScrollView;
+import com.boylab.tableview.view.TableView;
 
 import java.util.ArrayList;
 
@@ -20,6 +22,10 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.MyVi
 
     private Context context;
     private ArrayList<ItemRow> mTableDatas = new ArrayList<ItemRow>();
+    private ItemParams leftParams, contentParams;
+
+    private int focusRow = -1;
+    private int focusColumn = -1;
 
     private OnTableViewCreatedListener mOnTableViewCreatedListener;
     private OnTableViewListener mTableViewListener;
@@ -28,16 +34,18 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.MyVi
     /**
      * Item点击事件
      */
-    private OnItemClickListenter mOnItemClickListenter;
+    private TableView.OnItemClickListenter mOnItemClickListenter;
 
     /**
      * Item长按事件
      */
-    private OnItemLongClickListenter mOnItemLongClickListenter;
+    private TableView.OnItemLongClickListenter mOnItemLongClickListenter;
 
-    public TableViewAdapter(Context context, ArrayList<ItemRow> mTableDatas) {
+    public TableViewAdapter(Context context, ArrayList<ItemRow> mTableDatas, ItemParams leftParams, ItemParams contentParams) {
         this.context = context;
         this.mTableDatas = mTableDatas;
+        this.leftParams = leftParams;
+        this.contentParams = contentParams;
     }
 
     @NonNull
@@ -53,14 +61,40 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.MyVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
 
-        LeftColumnAdapter leftColumnAdapter = new LeftColumnAdapter(context, mTableDatas);
+        LeftColumnAdapter leftColumnAdapter = new LeftColumnAdapter(context, mTableDatas, leftParams);
         holder.rv_LeftColumn.setAdapter(leftColumnAdapter);
 
-        ContentAdapter contentAdapter = new ContentAdapter(context, mTableDatas);
+        final ContentAdapter contentAdapter = new ContentAdapter(context, mTableDatas, contentParams);
+        contentAdapter.setFocusRow(focusRow);
         holder.rv_Content.setAdapter(contentAdapter);
+        contentAdapter.setOnItemClickListenter(new TableView.OnItemClickListenter() {
+            @Override
+            public void onItemClick(View item, int mPosition) {
+                contentAdapter.setFocusRow(mPosition);
+                contentAdapter.notifyItemChanged(focusRow);
+                focusRow = mPosition;
+                contentAdapter.notifyItemChanged(focusRow);
 
+                if (mOnItemClickListenter != null){
+                    mOnItemClickListenter.onItemClick(item, mPosition);
+                }
+            }
+        });
+        contentAdapter.setOnItemLongClickListenter(new TableView.OnItemLongClickListenter(){
+
+            @Override
+            public void onItemLongClick(View item, int mPosition) {
+                contentAdapter.setFocusRow(mPosition);
+                contentAdapter.notifyItemChanged(focusRow);
+                focusRow = mPosition;
+                contentAdapter.notifyItemChanged(focusRow);
+                if (mOnItemLongClickListenter != null){
+                    mOnItemLongClickListenter.onItemLongClick(item, mPosition);
+                }
+            }
+        });
     }
 
     @Override
@@ -105,8 +139,15 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.MyVi
                     }
                 }
             });
-
         }
+    }
+
+    public void setFocusRow(int focusRow) {
+        this.focusRow = focusRow;
+    }
+
+    public void setFocusColumn(int focusColumn) {
+        this.focusColumn = focusColumn;
     }
 
     public void setOnTableViewCreatedListener(OnTableViewCreatedListener mOnTableViewCreatedListener) {
@@ -121,11 +162,11 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.MyVi
         this.mTableViewRangeListener = mTableViewRangeListener;
     }
 
-    public void setOnItemClickListenter(OnItemClickListenter mOnItemClickListenter) {
+    public void setOnItemClickListenter(TableView.OnItemClickListenter mOnItemClickListenter) {
         this.mOnItemClickListenter = mOnItemClickListenter;
     }
 
-    public void setOnItemLongClickListenter(OnItemLongClickListenter mOnItemLongClickListenter) {
+    public void setOnItemLongClickListenter(TableView.OnItemLongClickListenter mOnItemLongClickListenter) {
         this.mOnItemLongClickListenter = mOnItemLongClickListenter;
     }
 
@@ -176,31 +217,4 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.MyVi
 
     }
 
-    /**
-     * 说明 Item点击事件
-     * 作者 郭翰林
-     * 创建时间 2018/2/2 下午4:50
-     */
-    public interface OnItemClickListenter {
-
-        /**
-         * @param item     点击项
-         * @param position 点击位置
-         */
-        void onItemClick(View item, int position);
-    }
-
-    /**
-     * 说明 Item长按事件
-     * 作者 郭翰林
-     * 创建时间 2018/2/2 下午4:50
-     */
-    public interface OnItemLongClickListenter {
-
-        /**
-         * @param item     点击项
-         * @param position 点击位置
-         */
-        void onItemLongClick(View item, int position);
-    }
 }

@@ -9,12 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="1dp"
         android:layout_marginBottom="1dp"
-        android:background="@android:color/holo_blue_bright"
-        android:ems="6"
-        android:lines="1"
-        android:paddingHorizontal="6dp"
-        android:paddingVertical="6dp"
-        android:text="第10行 - 13列"
-        android:textSize="20sp" />
+        android:lines="1"/>
 
 </RelativeLayout>

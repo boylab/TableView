@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boylab.tableview.R;
+import com.boylab.tableview.protocol.ItemParams;
 import com.boylab.tableview.protocol.ItemRow;
+import com.boylab.tableview.view.TableView;
 
 import java.util.ArrayList;
 
@@ -18,10 +20,21 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHo
 
     private Context context;
     private ArrayList<ItemRow> mTableDatas = new ArrayList<ItemRow>();
+    private ItemParams contentParams;
 
-    public ContentAdapter(Context context, ArrayList<ItemRow> mTableDatas) {
+    private int focusRow = -1;
+
+    private TableView.OnItemClickListenter mOnItemClickListenter;
+    private TableView.OnItemLongClickListenter mOnItemLongClickListenter;
+
+    public ContentAdapter(Context context, ArrayList<ItemRow> mTableDatas, ItemParams contentParams) {
         this.context = context;
         this.mTableDatas = mTableDatas;
+        this.contentParams = contentParams;
+    }
+
+    public void setFocusRow(int focusRow) {
+        this.focusRow = focusRow;
     }
 
     @NonNull
@@ -32,11 +45,33 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         ItemRow itemRow = mTableDatas.get(position);
 
-        HeaderAdapter headerAdapter = new HeaderAdapter(context, itemRow);
+        boolean isFocus = (focusRow == position);
+        final HeaderAdapter headerAdapter = new HeaderAdapter(context, itemRow, contentParams, isFocus);
+        headerAdapter.setCanFocus(true);
         holder.rv_Table_Row.setAdapter(headerAdapter);
+
+        headerAdapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListenter != null){
+                    mOnItemClickListenter.onItemClick(holder.rv_Table_Row, position);
+                }
+            }
+        });
+
+        headerAdapter.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                if (mOnItemLongClickListenter != null){
+                    mOnItemLongClickListenter.onItemLongClick(holder.rv_Table_Row, position);
+                }
+                return true;
+            }
+        });
 
     }
 
@@ -55,8 +90,14 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHo
             LinearLayoutManager headLayoutManager = new LinearLayoutManager(context);
             headLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             rv_Table_Row.setLayoutManager(headLayoutManager);
-
-
         }
+    }
+
+    public void setOnItemClickListenter(TableView.OnItemClickListenter mOnItemClickListenter) {
+        this.mOnItemClickListenter = mOnItemClickListenter;
+    }
+
+    public void setOnItemLongClickListenter(TableView.OnItemLongClickListenter mOnItemLongClickListenter) {
+        this.mOnItemLongClickListenter = mOnItemLongClickListenter;
     }
 }
