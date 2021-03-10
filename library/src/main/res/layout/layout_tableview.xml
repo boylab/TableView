@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:id="@+id/text_Heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_bright"
+        android:textSize="20sp"
+        android:paddingHorizontal="6dp"
+        android:paddingVertical="6dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="1dp"
+        android:lines="1"
+        android:ems="6"
+        android:text="第1行1列"/>
+
+    <com.boylab.tableview.view.CustomScrollView
+        android:id="@+id/rv_HeadRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/text_Heading"
+        android:layout_alignTop="@+id/text_Heading" />
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/text_Heading">
+
+        <com.scwang.smart.refresh.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_TableView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <com.scwang.smart.refresh.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+
+
+</RelativeLayout>
