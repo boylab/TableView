@@ -55,7 +55,7 @@ public class LeftColumnAdapter extends RecyclerView.Adapter<LeftColumnAdapter.My
 
             ViewGroup.LayoutParams layoutParams = text_item.getLayoutParams();
             layoutParams.height = leftParams.getHeight();
-            layoutParams.width = leftParams.getWidth(getAdapterPosition());
+            layoutParams.width = leftParams.getWidth(0);
             text_item.setLayoutParams(layoutParams);
 
             text_item.setTextSize(leftParams.getTextSize());

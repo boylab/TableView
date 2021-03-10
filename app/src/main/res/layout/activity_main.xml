@@ -9,6 +9,8 @@
     <com.boylab.tableview.view.TableView
         android:id="@+id/tableview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:itemHeight="40dp"
+        app:itemWidth="@array/tableWith"/>
 
 </RelativeLayout>

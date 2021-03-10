@@ -18,7 +18,7 @@ public class ItemParams {
     private int height = HEIGHT;
     private HashMap<Integer, Integer> itemWidth = new HashMap<>();
 
-    private int textSize;
+    private float textSize;
     private int textColor;
     private int backgroundColor;
     private int foucsColor;
@@ -78,11 +78,11 @@ public class ItemParams {
         }
     }
 
-    public int getTextSize() {
+    public float getTextSize() {
         return textSize;
     }
 
-    public void setTextSize(int textSize) {
+    public void setTextSize(float textSize) {
         this.textSize = textSize;
     }
 
