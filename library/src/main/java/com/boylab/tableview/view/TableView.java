@@ -308,6 +308,15 @@ public class TableView extends RelativeLayout {
         tableViewAdapter.notifyDataSetChanged();
     }
 
+
+    public void setEnableRefresh(boolean enabled) {
+        refreshLayout.setEnableRefresh(enabled);
+    }
+
+    public void setEnableLoadMore(boolean enabled) {
+        refreshLayout.setEnableLoadMore(enabled);
+    }
+
     public void finishRefresh() {
         refreshLayout.finishRefresh(true);
     }
