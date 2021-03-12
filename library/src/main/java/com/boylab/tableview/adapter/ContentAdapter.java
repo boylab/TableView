@@ -56,6 +56,9 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHo
         headAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (ViewClick.isFastDoubleClick()){
+                    return;
+                }
                 if (mOnItemClickListenter != null){
                     mOnItemClickListenter.onItemClick(holder.rv_Table_Row, position);
                 }

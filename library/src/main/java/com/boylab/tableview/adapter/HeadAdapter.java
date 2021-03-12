@@ -56,6 +56,10 @@ public class HeadAdapter extends RecyclerView.Adapter<HeadAdapter.MyViewHolder> 
         holder.text_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (ViewClick.isFastDoubleClick()){
+                    return;
+                }
+
                 if (canFocus){
                     holder.text_item.setBackgroundColor(headParams.getFoucsColor());
                 }

@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TableView.iml" filepath="$PROJECT_DIR$/.idea/modules/TableView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TableView.iml" filepath="$PROJECT_DIR$/.idea/modules/TableView.iml" group="TableView" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TableView.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TableView.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/TableView.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/TableView.library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="TableView/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/library.iml" group="TableView/library" />
     </modules>
   </component>
 </project>
