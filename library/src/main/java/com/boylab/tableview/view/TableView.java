@@ -369,6 +369,8 @@ public class TableView extends RelativeLayout {
         rv_TableView.setBackgroundColor(divider);
     }
 
+
+
     public int getItemHeight() {
         return (int) itemHeight;
     }

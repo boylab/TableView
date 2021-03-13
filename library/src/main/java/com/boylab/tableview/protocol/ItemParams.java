@@ -2,8 +2,6 @@ package com.boylab.tableview.protocol;
 
 import android.graphics.Color;
 
-import com.boylab.tableview.view.TableView;
-
 import java.util.HashMap;
 import java.util.Set;
 
